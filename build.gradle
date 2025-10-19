@@ -16,7 +16,23 @@ dependencies {
 
 test {
     useJUnitPlatform()
-    finalizedBy jacocoTestReport
+    testLogging {
+        events "failed"
+        exceptionFormat = 'full'
+        showStandardStreams = true
+    }
+
+    afterSuite { desc, result ->
+        if (!desc.parent) { // solo al final de la raíz
+            println "\n==== Test Summary ===="
+            println "Result: ${result.resultType}"
+            println "Tests: ${result.testCount}, " +
+                    "Passed: ${result.successfulTestCount}, " +
+                    "Failed: ${result.failedTestCount}, " +
+                    "Skipped: ${result.skippedTestCount}"
+            println "======================\n"
+        }
+    }
 }
 
 jacocoTestReport {
