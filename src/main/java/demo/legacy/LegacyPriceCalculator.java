@@ -3,8 +3,12 @@ package demo.legacy;
 public class LegacyPriceCalculator {
 
     // Calculates final price (legacy style, do not touch lightly!)
-    public double calculate(double basePrice, int quantity, String countryCode, String membership,
-                            boolean includeTaxes, boolean expedited) {
+    public double calculate(double basePrice, 
+                            int quantity, 
+                            String countryCode, 
+                            String membership,
+                            boolean includeTaxes, 
+                            boolean expedited) {
         // check basePrice is valid
         if (basePrice >= 0) {
             if (quantity > 0) {
