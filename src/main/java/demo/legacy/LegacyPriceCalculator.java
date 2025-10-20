@@ -21,7 +21,7 @@ public class LegacyPriceCalculator {
                     total = total - (total * 0.05); // 5% discount
                     if (quantity > 50 && quantity <= 100) {
                         total = total - (total * 0.10); // extra 10%!!
-                    } else {
+                    } else if (quantity > 100) {
                         throw new IllegalArgumentException("Too many products!");
                     }
                     if (countryCode != null) {
@@ -40,6 +40,10 @@ public class LegacyPriceCalculator {
                     if (membership != null) {
                         if (membership.equals("GOLD")) {
                             total = total - 20; // gold special
+                            // you receive other adjustment on friday's as gold
+                            if (LocalDate.now().getDayOfWeek() == DayOfWeek.FRIDAY) {
+                                total = total * 0.95;
+                            }
                         } else if (membership.equals("SILVER")) {
                             total = total - 10; // silver
                         } else {
@@ -53,11 +57,8 @@ public class LegacyPriceCalculator {
                         }
                     } else {
                         // no membership
-                        if (LocalDate.now().getDayOfWeek() == DayOfWeek.FRIDAY) {
-                            total = total + 30;
-                        } else {
-                            total = total + 50;
-                        }
+                        total = total + 50;
+
                     }
                 }
 
