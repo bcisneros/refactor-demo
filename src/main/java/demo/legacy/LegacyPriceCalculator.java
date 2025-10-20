@@ -1,5 +1,8 @@
 package demo.legacy;
 
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+
 public class LegacyPriceCalculator {
 
     // Calculates final price (legacy style, do not touch lightly!)
@@ -10,7 +13,7 @@ public class LegacyPriceCalculator {
             String membership,
             boolean expedited) {
         // check basePrice is valid
-        if (basePrice >= 0) {
+        if (basePrice > 0) {
             if (quantity > 0) {
                 double total = basePrice * quantity;
                 // quantity discounts
@@ -30,7 +33,7 @@ public class LegacyPriceCalculator {
                             total = total * 1.20; // default worldwide?
                         }
                     } else {
-                        // country null => no taxes
+                        total = total * 1.30;
                     }
                 } else {
                     // membership discounts
@@ -50,6 +53,11 @@ public class LegacyPriceCalculator {
                         }
                     } else {
                         // no membership
+                        if (LocalDate.now().getDayOfWeek() == DayOfWeek.FRIDAY) {
+                            total = total + 30;
+                        } else {
+                            total = total + 50;
+                        }
                     }
                 }
 
@@ -62,7 +70,7 @@ public class LegacyPriceCalculator {
                 return 0; // no items
             }
         } else {
-            throw new IllegalArgumentException("base price");
+            throw new IllegalArgumentException("Invalid base price");
         }
     }
 
