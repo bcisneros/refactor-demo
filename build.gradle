@@ -1,6 +1,7 @@
 plugins {
     id 'java'
     id 'jacoco'
+    id 'info.solidsoft.pitest' version '1.15.0' // PIT plugin
 }
 
 group = 'demo'
@@ -41,4 +42,14 @@ jacocoTestReport {
         csv.required = false
         html.outputLocation = layout.buildDirectory.dir('jacocoHtml')
     }
+}
+
+pitest {
+    pitestVersion = '1.15.0' // PIT core version
+    junit5PluginVersion = '1.2.1' // Required for JUnit 5
+    targetClasses = ['demo.legacy.*'] // Classes to mutate
+    targetTests = ['demo.legacy.*']   // Tests to run
+    threads = 4
+    outputFormats = ['HTML']
+    timestampedReports = false
 }
