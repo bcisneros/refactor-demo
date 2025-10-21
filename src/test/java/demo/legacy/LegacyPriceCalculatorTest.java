@@ -194,19 +194,14 @@ class LegacyPriceCalculatorTest {
 
     @Test
     // @Disabled
-    void ten_items_mx_tax() {
-        double basePrice = 763.99d;
-        int quantity = 10;
-        String countryCode = "MX";
-        String membership = null;
-        boolean expedited = false;
+    void mx_country_code_tax() {
+        var basePrice = 30;
+        var quantity = 20;
+        var countryCode = "MX";
+        var membership = IRRELEVANT_MEMBERSHIP;
+        var expedited = IRRELEVANT_EXPEDITE;
 
-        // double expected = 8419.16d;
-        double baseTotal = basePrice * quantity;
-        double discounts = baseTotal * 0.05;
-        double subtotal = baseTotal - discounts;
-        double extraDiscount = 0;
-        double expected = (subtotal - extraDiscount) * 1.16;
+        var expected = 661.19;
 
         var result = calculate(basePrice, quantity, countryCode, membership, expedited);
 
@@ -215,18 +210,15 @@ class LegacyPriceCalculatorTest {
 
     @Test
     // @Disabled
-    void fifteen_items_us_tax() {
-        double basePrice = 200.876d;
-        int quantity = 15;
-        String countryCode = "US";
-        String membership = null;
-        boolean expedited = false;
+    void us_country_code_tax() {
+        var basePrice = 30.0;
+        var quantity = 20;
+        var countryCode = "US";
+        var membership = IRRELEVANT_MEMBERSHIP;
+        var expedited = IRRELEVANT_EXPEDITE;
 
-        double baseTotal = basePrice * quantity;
-        double discounts = baseTotal * 0.05;
-        double subtotal = baseTotal - discounts;
-        double extraDiscount = 0;
-        double expected = (subtotal - extraDiscount) * 1.07;
+        var expected = 609.90d;
+
 
         var result = calculate(basePrice, quantity, countryCode, membership, expedited);
 
@@ -235,18 +227,14 @@ class LegacyPriceCalculatorTest {
 
     @Test
     // @Disabled
-    void thirty_items_other_country_tax() {
-        double basePrice = 345.21d;
-        int quantity = 30;
-        String countryCode = "BR";
-        String membership = null;
-        boolean expedited = false;
+    void other_country_code_tax() {
+        var basePrice = 30;
+        var quantity = 20;
+        var countryCode = "NO_MX_OR_US_CODE";
+        var membership = IRRELEVANT_MEMBERSHIP;
+        var expedited = IRRELEVANT_EXPEDITE;
 
-        double baseTotal = basePrice * quantity;
-        double discounts = baseTotal * 0.05;
-        double subtotal = baseTotal - discounts;
-        double extraDiscount = 0;
-        double expected = (subtotal - extraDiscount) * 1.20;
+        var expected = 684.0d;
 
         var result = calculate(basePrice, quantity, countryCode, membership, expedited);
 
@@ -255,18 +243,14 @@ class LegacyPriceCalculatorTest {
 
     @Test
     // @Disabled
-    void membership_gold() {
-        double basePrice = 12.0d;
-        int quantity = 9;
-        String countryCode = null;
-        String membership = "GOLD";
-        boolean expedited = false;
+    void gold_membership() {
+        var basePrice = 100.0;
+        var quantity = 1;
+        var membership = "GOLD";
+        var countryCode = IRRELEVANT_COUNTRY_CODE;
+        var expedited = IRRELEVANT_EXPEDITE;
 
-        double baseTotal = basePrice * quantity;
-        double discounts = 20;
-        double subtotal = baseTotal - discounts;
-        double extraDiscount = 0;
-        double expected = subtotal - extraDiscount;
+        var expected = 80.0d;
 
         var result = calculate(basePrice, quantity, countryCode, membership, expedited);
 
@@ -275,60 +259,14 @@ class LegacyPriceCalculatorTest {
 
     @Test
     // @Disabled
-    void membership_silver() {
-        double basePrice = 15.0d;
-        int quantity = 7;
-        String countryCode = null;
-        String membership = "SILVER";
-        boolean expedited = false;
-
-        double baseTotal = basePrice * quantity;
-        double discounts = 10;
-        double subtotal = baseTotal - discounts;
-        double extraDiscount = 0;
-        double expected = subtotal - extraDiscount;
-
-        var result = calculate(basePrice, quantity, countryCode, membership, expedited);
-
-        validate(expected, result);
-    }
-
-    @Test
-    // @Disabled
-    void membership_other_no_rush() {
-        double basePrice = 20.0d;
-        int quantity = 3;
-        String countryCode = null;
-        String membership = "OTHER";
-        boolean expedited = false;
-
-        double baseTotal = basePrice * quantity;
-        double discounts = 0;
-        double subtotal = baseTotal - discounts;
-        double extraDiscount = 0;
-        double charges = 10;
-        double expected = (subtotal - extraDiscount) + charges;
-
-        var result = calculate(basePrice, quantity, countryCode, membership, expedited);
-
-        validate(expected, result);
-    }
-
-    @Test
-    // @Disabled
-    void membership_other_rush() {
-        double basePrice = 30.0d;
+    void silver_membership() {
+        var basePrice = 20.0d;
         int quantity = 5;
-        String countryCode = null;
-        String membership = "OTHER";
-        boolean expedited = true;
+        String membership = "SILVER";
+        String countryCode = IRRELEVANT_COUNTRY_CODE;
+        boolean expedited = IRRELEVANT_EXPEDITE;
 
-        double baseTotal = basePrice * quantity;
-        double discounts = 0;
-        double subtotal = baseTotal - discounts;
-        double extraDiscount = 0;
-        double charges = 30;
-        double expected = (subtotal - extraDiscount) + charges;
+        var expected = 90.0d;
 
         var result = calculate(basePrice, quantity, countryCode, membership, expedited);
 
@@ -337,12 +275,60 @@ class LegacyPriceCalculatorTest {
 
     @Test
     // @Disabled
-    void membership_total_zero() {
-        double basePrice = 19.0d;
-        int quantity = 1;
-        String countryCode = null;
-        String membership = "GOLD";
-        boolean expedited = true;
+    void other_membership_no_rush() {
+        var basePrice = 25.0d;
+        var quantity = 4;
+        var membership = "OTHER";
+        var expedited = false;
+        var countryCode = IRRELEVANT_COUNTRY_CODE;
+
+        var expected = 110.0d;
+
+        var result = calculate(basePrice, quantity, countryCode, membership, expedited);
+
+        validate(expected, result);
+    }
+
+    @Test
+    // @Disabled
+    void other_membership_rushing() {
+        var basePrice = 12.5d;
+        var quantity = 8;
+        var membership = "OTHER";
+        var expedited = true;
+        var countryCode = IRRELEVANT_COUNTRY_CODE;
+
+        var expected = 130.0d;
+
+        var result = calculate(basePrice, quantity, countryCode, membership, expedited);
+
+        validate(expected, result);
+    }
+
+    @Test
+    // @Disabled
+    void gold_membership_free_price() {
+        var basePrice = 19.9d;
+        var quantity = 1;
+        var membership = "GOLD";
+        var expedited = IRRELEVANT_EXPEDITE;
+        var countryCode = IRRELEVANT_COUNTRY_CODE;
+
+        double expected = 0.0d;
+
+        var result = calculate(basePrice, quantity, countryCode, membership, expedited);
+
+        validate(expected, result);
+    }
+
+     @Test
+    // @Disabled
+    void silver_membership_free_price() {
+        var basePrice = 9.9d;
+        var quantity = 1;
+        var membership = "SILVER";
+        var expedited = IRRELEVANT_EXPEDITE;
+        var countryCode = IRRELEVANT_COUNTRY_CODE;
 
         double expected = 0.0d;
 
