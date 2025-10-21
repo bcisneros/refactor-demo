@@ -2,7 +2,11 @@
 package demo.legacy;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.BeforeEach;
 import static org.junit.jupiter.api.Assertions.*;
+
+import java.time.LocalDate;
+import java.time.Month;
 
 import org.junit.jupiter.api.Disabled;
 
@@ -15,7 +19,12 @@ class LegacyPriceCalculatorTest {
     private static final double IRRELEVANT_BASE_PRICE = Double.MAX_VALUE;
     private static final String NO_MEMBERSHIP = null;
     private static final String NO_COUNTRY_CODE = null;
-    private LegacyPriceCalculator calculator = new LegacyPriceCalculator();
+    private LegacyPriceCalculator calculator;
+
+    @BeforeEach
+    void setup() {
+        calculator = new LegacyPriceCalculator();
+    }
 
     @Test
     void invalid_price_zero() {
@@ -312,6 +321,27 @@ class LegacyPriceCalculatorTest {
         var countryCode = IRRELEVANT_COUNTRY_CODE;
 
         double expected = 0.0d;
+
+        var result = calculate(basePrice, quantity, countryCode, membership, expedited);
+
+        validate(expected, result);
+    }
+
+    @Test
+    // @Disabled
+    void gold_friday() {
+        var basePrice = 100d;
+        var quantity = 5;
+        var membership = "GOLD";
+        var expedited = IRRELEVANT_EXPEDITE;
+        var countryCode = IRRELEVANT_COUNTRY_CODE;
+
+        // a real friday
+        calculator = new LegacyPriceCalculator(
+            () -> LocalDate.of(2025, Month.OCTOBER, 24)
+        );
+
+        double expected = 456d;
 
         var result = calculate(basePrice, quantity, countryCode, membership, expedited);
 

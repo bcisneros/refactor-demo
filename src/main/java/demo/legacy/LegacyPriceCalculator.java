@@ -5,6 +5,16 @@ import java.time.LocalDate;
 
 public class LegacyPriceCalculator {
 
+    private final LocalDateProvider localDateProvider;
+
+    public LegacyPriceCalculator() {
+        this.localDateProvider = () -> LocalDate.now();
+    }
+
+    public LegacyPriceCalculator(LocalDateProvider localDateProvider) {
+        this.localDateProvider = localDateProvider;
+    }
+
     // Calculates final price (legacy style, do not touch lightly!)
     public double calculate(
             double basePrice,
@@ -41,7 +51,7 @@ public class LegacyPriceCalculator {
                         if (membership.equals("GOLD")) {
                             total = total - 20; // gold special
                             // you receive other adjustment on friday's as gold
-                            if (LocalDate.now().getDayOfWeek() == DayOfWeek.FRIDAY) {
+                            if (localDateProvider.today().getDayOfWeek() == DayOfWeek.FRIDAY) {
                                 total = total * 0.95;
                             }
                         } else if (membership.equals("SILVER")) {
