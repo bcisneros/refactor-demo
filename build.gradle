@@ -52,4 +52,7 @@ pitest {
     threads = 4
     outputFormats = ['HTML']
     timestampedReports = false
+    // Enable all available mutators
+    // mutators = ['ALL']
+
 }
