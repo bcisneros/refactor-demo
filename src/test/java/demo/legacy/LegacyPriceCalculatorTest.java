@@ -18,7 +18,6 @@ class LegacyPriceCalculatorTest {
     private LegacyPriceCalculator calculator = new LegacyPriceCalculator();
 
     @Test
-    @Disabled
     void invalid_price_zero() {
         var basePrice = 0.0d;
         var quantity = IRRELEVANT_QUANTITY;
@@ -33,7 +32,6 @@ class LegacyPriceCalculatorTest {
     }
 
     @Test
-    @Disabled
     void invalid_price_negative() {
         var basePrice = -1.0d;
         var quantity = IRRELEVANT_QUANTITY;
@@ -48,7 +46,6 @@ class LegacyPriceCalculatorTest {
     }
 
     @Test
-    @Disabled
     void no_items() {
         var quantity = 0;
         var basePrice = IRRELEVANT_BASE_PRICE;
@@ -64,7 +61,6 @@ class LegacyPriceCalculatorTest {
     }
 
     @Test
-    @Disabled
     void no_discounts_no_membership() {
         var basePrice = 100.0;
         var quantity = 1;
@@ -81,7 +77,6 @@ class LegacyPriceCalculatorTest {
     }
 
     @Test
-    @Disabled
     void discount_ten_items_default_tax_no_country_code() {
         var basePrice = 10.00d;
         var quantity = 10;
@@ -100,7 +95,6 @@ class LegacyPriceCalculatorTest {
     }
 
     @Test
-    @Disabled
     void discount_eleven_items_default_tax_no_country_code() {
         var basePrice = 300.0d;
         var quantity = 11;
@@ -119,7 +113,6 @@ class LegacyPriceCalculatorTest {
     }
 
     @Test
-    @Disabled
     void discount_fifty_items_default_tax_no_country_code() {
         var basePrice = 5d;
         var quantity = 50;
@@ -138,7 +131,6 @@ class LegacyPriceCalculatorTest {
     }
 
     @Test
-    @Disabled
     void discount_greater_fifty_with_double_discount_default_tax() {
         var basePrice = 100.0d;
         var quantity = 51;
@@ -158,7 +150,6 @@ class LegacyPriceCalculatorTest {
     }
 
     @Test
-    @Disabled
     void discount_hundred_items_with_double_discount_default_tax() {
         var basePrice = 100d;
         var quantity = 100;
@@ -178,7 +169,6 @@ class LegacyPriceCalculatorTest {
     }
 
     @Test
-    @Disabled
     void too_many_products() {
         var quantity = 101;
         var basePrice = IRRELEVANT_BASE_PRICE;
@@ -193,7 +183,6 @@ class LegacyPriceCalculatorTest {
     }
 
     @Test
-    @Disabled
     void mx_country_code_tax() {
         var basePrice = 30;
         var quantity = 20;
@@ -209,7 +198,6 @@ class LegacyPriceCalculatorTest {
     }
 
     @Test
-    @Disabled
     void us_country_code_tax() {
         var basePrice = 30.0;
         var quantity = 20;
@@ -226,7 +214,6 @@ class LegacyPriceCalculatorTest {
     }
 
     @Test
-    @Disabled
     void other_country_code_tax() {
         var basePrice = 30;
         var quantity = 20;
@@ -242,7 +229,6 @@ class LegacyPriceCalculatorTest {
     }
 
     @Test
-    @Disabled
     void gold_membership() {
         var basePrice = 100.0;
         var quantity = 1;
@@ -258,7 +244,6 @@ class LegacyPriceCalculatorTest {
     }
 
     @Test
-    @Disabled
     void silver_membership() {
         var basePrice = 20.0d;
         int quantity = 5;
@@ -274,7 +259,6 @@ class LegacyPriceCalculatorTest {
     }
 
     @Test
-    @Disabled
     void other_membership_no_rush() {
         var basePrice = 25.0d;
         var quantity = 4;
@@ -290,7 +274,6 @@ class LegacyPriceCalculatorTest {
     }
 
     @Test
-    @Disabled
     void other_membership_rushing() {
         var basePrice = 12.5d;
         var quantity = 8;
@@ -306,7 +289,6 @@ class LegacyPriceCalculatorTest {
     }
 
     @Test
-    @Disabled
     void gold_membership_free_price() {
         var basePrice = 19.9d;
         var quantity = 1;
@@ -322,7 +304,6 @@ class LegacyPriceCalculatorTest {
     }
 
      @Test
-    @Disabled
     void silver_membership_free_price() {
         var basePrice = 9.9d;
         var quantity = 1;
